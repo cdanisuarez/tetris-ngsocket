@@ -16,13 +16,13 @@ import {
   POINTS,
   KEY,
   COLORSDARKER
-} from './constants';
-import { Piece, IPiece } from './piece.component';
-import { GameService } from './game.service';
+} from '../../constants/constants';
+import { Piece, IPiece } from '../../models/piece.component';
+import { GameService } from '../../services/game.service';
 import { Zoundfx } from 'ng-zzfx';
-import { EventService } from './services/event.service';
+import { EventService } from '../../services/event.service';
 import { Subscription } from 'rxjs';
-import { IEvent } from './interfaces/event.interface';
+import { IEvent } from '../../interfaces/event.interface';
 
 @Component({
   selector: 'game-board',

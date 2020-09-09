@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IPiece } from './piece.component';
-import { COLS, ROWS, POINTS } from './constants';
+import { IPiece } from '../models/piece.component';
+import { COLS, ROWS, POINTS } from '../constants/constants';
 
 @Injectable({
   providedIn: 'root'
