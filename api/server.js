@@ -1,40 +1,79 @@
 const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+const bodyParser = require('body-parser');
+const KEYS = require('./keys.constant');
 
-const event = {
-  keyCode: 80,
+const PORT = 4100;
+const API = '/api/tetris/';
+let event = {
+  keyCode: 80
 };
 
-io.on("connection", socket => {
-  let previousId;
-  const safeJoin = currentId => {
-    socket.leave(previousId);
-    socket.join(currentId);
-    previousId = currentId;
+app.use(bodyParser.json());
+
+app.post(API, (req, res) => {
+  let error = {
+    message: ''
   };
 
-  socket.on("getEvent", eventId => {
-    safeJoin(eventId);
-    socket.emit("event", events[eventId]);
-  });
+  const success = {
+    message: 'Movimiento exitoso'
+  };
 
-  socket.on("addEvent", event => {
-    events[event.id] = event;
-    safeJoin(event.id);
-    io.emit("events", Object.keys(events));
-    socket.emit("event", event);
-  });
+  const body = req.body;
 
-  socket.on("editEvent", event => {
-    events[event.id] = event;
-    socket.to(event.id).emit("event", event);
-  });
+  if (!body) {
+    error.message = 'Falta el cuerpo de la petición';
+    return res.status(400).send(error);
+  }
 
-  io.emit('event', event);
-  // io.emit("events", events);
+  if (!body.keyCode) {
+    error.message = 'Debe enviar un keyCode';
+    return res.status(400).send(error);
+  }
+
+  if (validateKeyCode(body.keyCode)) {
+    event = req.body;
+    return res.status(200).send(success);
+  } else {
+    error.message = 'Este keyCode no es valido';
+    return res.status(400).send(error);
+  }
 });
 
-http.listen(4444, () => {
-  console.log('Server API listeting by', 4444, 'port.');
+const validateKeyCode = (keyCode) => {
+  const isValid = true;
+  for (const objKey of KEYS) {
+    if (objKey.keyCode === keyCode) {
+      return isValid;
+    }
+  }
+
+  return !isValid;
+}
+
+io.on('connection', socket => {
+  /*socket.on('getEvent', eventId => {
+    safeJoin(eventId);
+    socket.emit('event', events[eventId]);
+  });
+
+  socket.on('addEvent', event => {
+    events[event.id] = event;
+    safeJoin(event.id);
+    io.emit('events', Object.keys(events));
+    socket.emit('event', event);
+  });
+
+  socket.on('editEvent', event => {
+    events[event.id] = event;
+    socket.to(event.id).emit('event', event);
+  });*/
+
+  io.emit('event', event);
+});
+
+http.listen(PORT, () => {
+  console.log('Server API listeting by', PORT, 'port.');
 });

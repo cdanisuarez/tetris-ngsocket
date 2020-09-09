@@ -8,8 +8,9 @@ import { AppComponent } from './app.component';
 import { BoardComponent } from './components/board/board.component';
 import { DocumentListComponent } from './components/document-list/document-list.component';
 import { DocumentComponent } from './components/document/document.component';
+import { environment } from 'src/environments/environment';
 
-const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
+const config: SocketIoConfig = { url: environment.API_URL, options: {} };
 
 @NgModule({
   declarations: [AppComponent, BoardComponent, DocumentListComponent, DocumentComponent],

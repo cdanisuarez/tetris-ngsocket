@@ -106,6 +106,8 @@ export class BoardComponent implements OnInit {
 
   subscribeToNewEvent() {
     this._eventSubs = this.eventService.event.subscribe(event => {
+      console.log('Subscribe')
+      console.log('event', event)
       this.keyEvent(event);
     });
   }
