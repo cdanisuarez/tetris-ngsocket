@@ -57,7 +57,6 @@ export class BoardComponent implements OnInit {
 
   @HostListener('window:keydown', ['$event'])
   keyEvent(event: any) {
-    console.log('event', event)
     if (event.keyCode === KEY.ESC) {
       this.gameOver();
     } else if (this.moves[event.keyCode]) {
@@ -108,6 +107,8 @@ export class BoardComponent implements OnInit {
     this._eventSubs = this.eventService.event.subscribe(event => {
       console.log('Subscribe')
       console.log('event', event)
+      event.preventDefault = () => { return; };
+      this.event = event;
       this.keyEvent(event);
     });
   }

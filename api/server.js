@@ -6,9 +6,7 @@ const KEYS = require('./keys.constant');
 
 const PORT = 4100;
 const API = '/api/tetris/';
-let event = {
-  keyCode: 80
-};
+let event = {};
 
 app.use(bodyParser.json());
 
@@ -35,6 +33,7 @@ app.post(API, (req, res) => {
 
   if (validateKeyCode(body.keyCode)) {
     event = req.body;
+    io.emit('event', event);
     return res.status(200).send(success);
   } else {
     error.message = 'Este keyCode no es valido';
