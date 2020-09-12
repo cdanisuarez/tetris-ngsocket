@@ -1,22 +1,5 @@
-import {
-  Component,
-  ViewChild,
-  ElementRef,
-  OnInit,
-  HostListener
-} from '@angular/core';
-import {
-  COLS,
-  BLOCK_SIZE,
-  ROWS,
-  COLORS,
-  COLORSLIGHTER,
-  LINES_PER_LEVEL,
-  LEVEL,
-  POINTS,
-  KEY,
-  COLORSDARKER
-} from '../../constants/constants';
+import { Component, ViewChild, ElementRef, OnInit, HostListener } from '@angular/core';
+import { COLS, BLOCK_SIZE, ROWS, COLORS, COLORSLIGHTER, LINES_PER_LEVEL, LEVEL, POINTS, KEY, COLORSDARKER } from '../../constants/constants';
 import { Piece, IPiece } from '../../models/piece.component';
 import { GameService } from '../../services/game.service';
 import { Zoundfx } from 'ng-zzfx';
@@ -26,8 +9,10 @@ import { IEvent } from '../../interfaces/event.interface';
 
 @Component({
   selector: 'game-board',
-  templateUrl: 'board.component.html'
+  templateUrl: 'board.component.html',
+  styleUrls: ['./board.component.scss']
 })
+
 export class BoardComponent implements OnInit {
   @ViewChild('board', { static: true })
   canvas: ElementRef<HTMLCanvasElement>;
@@ -99,13 +84,15 @@ export class BoardComponent implements OnInit {
     this.initNext();
     this.resetGame();
     this.highScore = 0;
+    this.ctx.font = '1px Arial';
+    this.ctx.fillStyle = 'green';
+    this.ctx.fillText('PRESS ENTER', 1.5, 8, 8);
     this.subscribeToNewEvent();
   }
 
 
   subscribeToNewEvent() {
     this._eventSubs = this.eventService.event.subscribe(event => {
-      console.log('Subscribe')
       console.log('event', event)
       event.preventDefault = () => { return; };
       this.event = event;

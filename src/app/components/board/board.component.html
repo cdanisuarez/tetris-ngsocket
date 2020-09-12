@@ -1,30 +1,40 @@
-<div class="grid">
-	<canvas #board class="game-board"></canvas>
-	<div class="right-column">
-		<div>
-			<h1>TETRIS</h1>
-			<p>Score: {{ points }}</p>
-			<p>Lines: {{ lines }}</p>
-			<p>Level: {{ level }}</p>
-			<p>High Score:</p>
-			<p>{{ highScore }}</p>
-			<p>Next Block:</p>
-			<canvas #next class="next"></canvas>
-		</div>
-		<div class="button-container">
-			<button (click)="play()" class="play-button button" *ngIf="!gameStarted">
-				Play
-			</button>
-			<button (click)="gameOver()" class="reset-button button" *ngIf="gameStarted">
-				Reset
-			</button>
-			<button (click)="pause()" class="pause-button button" [class.button-disabled]="!gameStarted">
-				Pause
-			</button>
+<div class="board">
+	<div class="grid">
+		<canvas #board class="game-board"></canvas>
+		<div class="right-column">
+			<div>
+				<h1>TETRIS</h1>
+				<p>Score: {{ points }}</p>
+				<p>Lines: {{ lines }}</p>
+				<p>Level: {{ level }}</p>
+				<p>High Score:</p>
+				<p>{{ highScore }}</p>
+				<p>Next Block:</p>
+				<canvas #next class="next"></canvas>
+			</div>
+			<div class="button-container">
+				<button (click)="play()" class="play-button button" *ngIf="!gameStarted">
+					Play
+				</button>
+				<button (click)="gameOver()" class="reset-button button" *ngIf="gameStarted">
+					Reset
+				</button>
+				<button (click)="pause()" class="pause-button button" [class.button-disabled]="!gameStarted">
+					Pause
+				</button>
+			</div>
 		</div>
 	</div>
-</div>
-<div>
-	Event
-	{{event | json}}
+
+	<div class="intructions">
+		<h2>Instructions:</h2>
+
+		<p>ENTER (13): Start the game</p>
+		<p>P (80): Pause</p>
+		<p>R (82): Reset</p>
+		<p>UP (38): Rotate the piece</p>
+		<p>RIGHT (39): Move right</p>
+		<P>LEFT (37): Move left</P>
+		<p>DOWN (40): Move down</p>
+	</div>
 </div>
